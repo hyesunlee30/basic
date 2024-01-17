@@ -1,0 +1,35 @@
+server:
+  port:8080
+
+spring:
+#  profiles :
+#    active : dev
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/basic
+    username: root
+    password: 1234
+  jpa:
+    database: mysql
+    #innoDB ???? ??
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    #???? ???? ??
+    generate-ddl: true
+    #create ??? ?? table? drop? ?? -- ?? ??
+    #update ??? ????? alter? ??
+    #validate? ???? check
+    hibernate:
+      ddl-auto: create
+    show_sql : true
+
+#---
+#
+#spring:
+#  profiles:
+#    active: prod
+#  datesource:
+#    url:jdbc:mariadb://localhsot:3306/member
+#    username:root
+#    password:1234
+#
+

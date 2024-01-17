@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>json</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<form id="myForm">
+  <p>emil : <input type="text" id="email"></p>
+  <p>name : <input type="text" id="name"></p>
+  <p>password : <input type="text" id="password"></p>
+  <p><button onclick="sendData()">제출</button></p>
+</form>
+<script>
+  async function sendData () {
+    const jsonData = {
+        "email" : document.getElementById("email").value,
+        "name" : document.getElementById("name").value,
+        "password" : document.getElementById("password").value
+    }
+    try {
+      const response = await axios ({
+        method: 'POST',
+        url: "http://localhost:8080/hello/json-post-handle",
+        data: JSON.stringify(jsonData),
+        headers:{'Content-Type':'application/json'}
+      });
+      console.log(response);
+      window.location.href = "http://localhost:8080"+response.data;
+    } catch(e) {
+      console.log(e);
+    }
+
+  }
+</script>
+</body>
+</html>

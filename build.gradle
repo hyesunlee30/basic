@@ -1,0 +1,44 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.12'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.encore'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '11'
+}
+
+repositories {
+	//의존성(라이브러리)을 가져오는 대상 repository(저장소)
+	//내부망에 구축되어 있는 프로젝트의 경우 nexus와 같은 라이브러리를 사용하여 내부망 repository
+	//maven { url "http://nexus.XXXXX.com:8081/nexus/content/groups/public/" }
+	mavenCentral()
+}
+//starter 관련 버전관리 안 해도 괜찮음 스프링 재단에서 해줌, java랑 boot 버전이랑 호환성을 맞춰줌
+dependencies {
+	//thmeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	//MVC 를 위한
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//lombok
+	//getter, setter, builder, toString, 생성자, log 관련 의존성
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	//테스트를 위한
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//DB를 위한 의존성 : jdbc, mariadb 클라이언트
+	//implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
+	//spring data jpa의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//mybatis관련 의존성 추가
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+}
+
+tasks.named('test') {
+	//test 라이브러리
+	useJUnitPlatform()
+}
