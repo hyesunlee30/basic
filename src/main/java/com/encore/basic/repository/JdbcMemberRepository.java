@@ -2,6 +2,7 @@ package com.encore.basic.repository;
 
 import com.encore.basic.domain.Member;
 import com.encore.basic.domain.MemberRequestDto;
+import com.encore.basic.domain.MemberUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -89,4 +90,10 @@ public class JdbcMemberRepository implements MemberRepository{
         }
         return member;
     }
+
+    @Override
+    public void delete(Member id) {
+
+    }
+
 }

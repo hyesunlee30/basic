@@ -3,6 +3,7 @@ package com.encore.basic.controller;
 import com.encore.basic.domain.Member;
 import com.encore.basic.domain.MemberDetailResponseDto;
 import com.encore.basic.domain.MemberRequestDto;
+import com.encore.basic.domain.MemberUpdateDto;
 import com.encore.basic.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
@@ -77,7 +79,7 @@ public class MemberController {
             }
 
             return "member/member-detail";
-        } catch (NoSuchElementException e) {
+        } catch (EntityNotFoundException e) {
             return "404-error-page";
         }
     }
@@ -93,6 +95,18 @@ public class MemberController {
         service.save(memberRequestDto);
         model.addAttribute("members",service.getAllMemberList());
         return "redirect:/member/list";
+    }
+
+    @GetMapping("delete")
+    public String deleteMember(@RequestParam(value = "id")int id) {
+        service.delete(id);
+        return "redirect:/member/list";
+    }
+
+    @PostMapping("update")
+    public String updateMember(MemberUpdateDto memberUpdateDto, Model model){
+        model.addAttribute("members",service.update(memberUpdateDto));
+        return "redirect:/member/detail?id="+memberUpdateDto.getId();
     }
 
 }

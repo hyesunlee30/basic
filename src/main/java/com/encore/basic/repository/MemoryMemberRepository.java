@@ -1,6 +1,7 @@
 package com.encore.basic.repository;
 
 import com.encore.basic.domain.Member;
+import com.encore.basic.domain.MemberUpdateDto;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -32,4 +33,10 @@ public class MemoryMemberRepository implements MemberRepository {
     public Optional<Member> findById(int id) {
         return memberList.stream().filter(a->a.getId()==id).findFirst();
     }
+
+    @Override
+    public void delete(Member id) {
+
+    }
+
 }

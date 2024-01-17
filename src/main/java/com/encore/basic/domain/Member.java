@@ -2,6 +2,7 @@ package com.encore.basic.domain;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -30,4 +31,6 @@ public class Member {
     @CreationTimestamp
     @Column(name = "created_time")
     private LocalDateTime create_time;
+    @UpdateTimestamp
+    private LocalDateTime updatedTime;
 }

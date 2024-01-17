@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 public class MemberDetailResponseDto {
+    private int id;
     private String name;
     private String email;
     private String password;
@@ -15,6 +16,7 @@ public class MemberDetailResponseDto {
 
     public static MemberDetailResponseDto of(Member member) {
         MemberDetailResponseDto mrd = MemberDetailResponseDto.builder()
+                .id(member.getId())
                 .email(member.getEmail())
                 .name(member.getName())
                 .password(member.getPassword())
