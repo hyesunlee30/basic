@@ -5,6 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 //HTTP 통신을 편하게 할 수 있다.
@@ -41,7 +48,7 @@ public class HelloController {
     public String helloScreenModelParam(@RequestParam(value="name")String inputName, Model model) {
         //화면에 data를 넘기고 싶을때
         //model에 key:value 형식으로 전달
-        //템플릿엔진기술을 사용해서.
+        //템플릿엔진기술을 사용해서.s
         model.addAttribute("myData",inputName);
         return "screen";
     }
@@ -63,11 +70,21 @@ public class HelloController {
 
     @GetMapping("json")
     @ResponseBody
-    public Hello helloJson() {
-        Hello hello = new Hello();
-        hello.setEmail("naver");
-        hello.setName("test");
-        hello.setPassword("123");
+    public Hello helloJson(HttpServletResponse response) throws IOException {
+//        Hello hello = new Hello();
+//        hello.setEmail("naver");
+//        hello.setName("test");
+//        hello.setPassword("123");
+//        response.setContentType("text/plain");
+//        PrintWriter out = response.getWriter();
+//        out.print(hello.toString());
+//        out.close();
+
+        Hello hello = Hello.builder()
+                .email("qwe")
+                .name("12")
+                .password("123")
+                .build();
 
         return hello;
     }
@@ -108,6 +125,34 @@ public class HelloController {
         System.out.println(hello.getEmail());
         return "/hello/screen";
     }
+
+    @PostMapping("httpservlet")
+    @ResponseBody
+    public String httpServletTest(HttpServletRequest req) {
+
+        //header 정보 추출
+        System.out.println(req.getContentType());
+        System.out.println(req.getMethod());
+        //session
+        System.out.println("se "+req.getSession());
+        System.out.println(req.getHeader("Accept"));
+
+        //body 정보 추출
+        //req.getReader() 를 통해 BufferedReader를 받아 직접  파싱
+        System.out.println(req.getParameter("test2"));
+        System.out.println(req.getParameter("test1"));
+
+
+        return "OK";
+    }
+
+    @GetMapping("hello-servlet-jsp-get")
+    public String jspGet(Model model) {
+
+        model.addAttribute("myData", "jsp test data");
+        return "hello-jsp";
+    }
+
 
 
 }

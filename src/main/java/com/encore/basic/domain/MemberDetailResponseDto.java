@@ -14,6 +14,7 @@ public class MemberDetailResponseDto {
     private String password;
     private LocalDateTime create_time;
 
+
     public static MemberDetailResponseDto of(Member member) {
         MemberDetailResponseDto mrd = MemberDetailResponseDto.builder()
                 .id(member.getId())

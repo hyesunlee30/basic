@@ -27,7 +27,7 @@ public class MemberService {
     //private MemberRepository repository;
     //SpringDataJpaMemberRepository 를 쓰면 extends를 JpaRepository만 하면 jpa기능 다 쓸 수 있음
 
-    private MemberRepository repository;
+    private final MemberRepository repository;
 //    @Autowired
 //    MemberService(JpaMemberRepository repository) {
 //        this.repository = repository;
@@ -51,10 +51,6 @@ public class MemberService {
                 .build();
         Member newMember = repository.save(member);
 
-        if(newMember.getName().equals("kim")) {
-            throw new IllegalArgumentException();
-        }
-
     }
 
     public List<MemberResponseDto> getAllMemberList() {
@@ -63,29 +59,21 @@ public class MemberService {
     }
 
     public MemberDetailResponseDto findById(int id) throws EntityNotFoundException {
-        Member member = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Member member = repository.findById(id).orElseThrow(()->new EntityNotFoundException("검색해신 ID의 Member가 없습니다."));
         return MemberDetailResponseDto.of(member);
     }
 
     public void delete(int id) {
-        Member member = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Member member = repository.findById(id).orElseThrow(()->new EntityNotFoundException("검색해신 ID의 Member가 없습니다."));
         repository.delete(member);
 
     }
 
-    public MemberResponseDto update (MemberUpdateDto memberRequestDto) {
+    public void update (MemberUpdateDto memberRequestDto) {
         Member member = repository.findById(memberRequestDto.getId()).orElseThrow(EntityNotFoundException::new);
-
-        member = Member.builder()
-                .id(member.getId())
-                .name(memberRequestDto.getName())
-                .password(memberRequestDto.getPassword())
-                .email(memberRequestDto.getEmail())
-                .create_time(member.getCreate_time())
-                .build();
-
+        member.updateMember(member, memberRequestDto);
         repository.save(member);
-        return MemberResponseDto.of(member);
+
     }
 
 }

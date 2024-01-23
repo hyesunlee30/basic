@@ -5,7 +5,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -33,4 +32,14 @@ public class Member {
     private LocalDateTime create_time;
     @UpdateTimestamp
     private LocalDateTime updatedTime;
+
+    public Member updateMember(Member member, MemberUpdateDto memberUpdateDto) {
+
+        this.name = memberUpdateDto.getName();
+        this.email = memberUpdateDto.getEmail();
+        this.password = memberUpdateDto.getPassword();
+
+        return member;
+    }
+
 }

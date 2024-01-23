@@ -1,16 +1,13 @@
-#application.properties의 형식
-#serport.post=8081
-#spring.datasource.url = jdbc:mariadb://localhsot:3306/member
-#spring.datasource.username=root
-#spring.datasource.password=1234
-
-#
 #server:
 #    port:8081
 
 spring:
   #    profiles:
   #        active = prod
+#  mvc:
+#    view:
+#      prefix: /WEB-INF/views/
+#      suffix: .jsp
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/basic
@@ -30,6 +27,13 @@ spring:
       ddl-auto: update
       #            jpa가 자동으로 쿼리를 실행할때. 쿼리가 console창에 보여지도록
       show_sql: true
+  #springboot 2.4 이상에서는 기본적으로 PathPatternParser를 사용하고 있는데,
+  #이는 이전버전과 다른 경로매칭규칙을 가지고 있어, springfox와 같은 일부라이브러리에서는 문제 발생한다.
+  #그래서 안 사용하도록 설정한 것
+  #http://localhost:8080/swagger-ui/
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
-mybatis:
-  mapper-locations: classpath:/mapper/**/*.xml
+#mybatis:
+#  mapper-locations: classpath:/mapper/**/*.xml

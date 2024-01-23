@@ -91,7 +91,7 @@ public class MemberController {
     }
 
     @PostMapping("create")
-    public String createMember(MemberRequestDto memberRequestDto,Model model) {
+    public String createMember(MemberRequestDto memberRequestDto, Model model) {
         service.save(memberRequestDto);
         model.addAttribute("members",service.getAllMemberList());
         return "redirect:/member/list";
@@ -105,7 +105,6 @@ public class MemberController {
 
     @PostMapping("update")
     public String updateMember(MemberUpdateDto memberUpdateDto, Model model){
-        model.addAttribute("members",service.update(memberUpdateDto));
         return "redirect:/member/detail?id="+memberUpdateDto.getId();
     }
 
